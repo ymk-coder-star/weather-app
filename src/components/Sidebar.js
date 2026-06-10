@@ -21,13 +21,16 @@ export default function Sidebar({ setIsFavourite }) {
 			try {
 				const favouritesArr = await Promise.all(
 					documents.map(async (item) => {
-						const rcvdData = await fetchWeather({
+						const params = {
 							latitude: item.latitude,
 							longitude: item.longitude,
-						});
-						const readyData = {
-							...rcvdData,
+							timezone: item.timezone,
 							address: item.address,
+						};
+						const rcvdData = await fetchWeather(params);
+						const readyData = {
+							...params,
+							...rcvdData,
 							id: item.id,
 						};
 						return readyData;
@@ -44,13 +47,16 @@ export default function Sidebar({ setIsFavourite }) {
 	//check if current weatherData state is a favourite
 	useEffect(() => {
 		setIsFavourite(false);
-		for (const fav of favourites) {
-			if (
-				fav.latitude === weatherData.latitude &&
-				fav.longitude === weatherData.longitude
-			) {
-				setIsFavourite(true);
-				return;
+
+		if (weatherData && weatherData.current) {
+			for (const fav of favourites) {
+				if (
+					fav.latitude === weatherData.latitude &&
+					fav.longitude === weatherData.longitude
+				) {
+					setIsFavourite(true);
+					return;
+				}
 			}
 		}
 	}, [weatherData, favourites, setIsFavourite]);
@@ -68,7 +74,7 @@ export default function Sidebar({ setIsFavourite }) {
 						<p>{item.address[0]}</p>
 						<p>
 							{item.current?.temperature_2m?.toFixed(0)}
-							{item.current_units.temperature_2m}
+							{item.current_units?.temperature_2m}
 						</p>
 					</div>
 				))}

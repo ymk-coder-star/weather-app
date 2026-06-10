@@ -19,12 +19,16 @@ export default function LocationSearchForm() {
 	const fetchLocations = async (input) => {
 		if (!input) return;
 
-		const geoLocateUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${input}&count=10&language=en&format=json`;
+		try {
+			const geoLocateUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${input}&count=10&language=en&format=json`;
 
-		const res = await fetch(geoLocateUrl);
-		const data = await res.json();
+			const res = await fetch(geoLocateUrl);
+			const data = await res.json();
 
-		setResults(data.results);
+			setResults(data.results);
+		} catch (err) {
+			console.error('Could not fetch locations from search');
+		}
 	};
 
 	const handleChange = async (value) => {

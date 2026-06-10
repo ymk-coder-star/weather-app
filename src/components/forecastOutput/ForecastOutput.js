@@ -15,7 +15,7 @@ export default function ForecastOutput({ isFavourite }) {
 	const { weatherData } = useWeatherContext();
 	const { user } = useUserContext();
 
-	const { latitude, longitude, address } = weatherData;
+	const { latitude, longitude, address, timezone } = weatherData || {};
 
 	useEffect(() => {
 		setWeatherFromCurrLoc();
@@ -27,6 +27,7 @@ export default function ForecastOutput({ isFavourite }) {
 		const doc = {
 			...{ latitude },
 			...{ longitude },
+			...{ timezone },
 			...{ address: address || ['(unnamed)'] },
 			uid: user.uid,
 		};
@@ -46,9 +47,13 @@ export default function ForecastOutput({ isFavourite }) {
 	return (
 		<div>
 			<div className="heading">
-				{weatherData.current && <h3>{address ? address.join(', ') : '(unnamed)'}</h3>}
-				{weatherData.current && !isFavourite && <button onClick={handleAdd}>Add</button>}
-				{isFavourite && <button onClick={handleRemove}>Remove</button>}
+				{weatherData?.current && (
+					<>
+						{<h3>{address ? address.join(', ') : '(unnamed)'}</h3>}
+						{!isFavourite && <button onClick={handleAdd}>Add</button>}
+						{isFavourite && <button onClick={handleRemove}>Remove</button>}
+					</>
+				)}
 			</div>
 
 			<div className="forecast-output">

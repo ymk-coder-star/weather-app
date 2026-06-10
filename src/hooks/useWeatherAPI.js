@@ -76,8 +76,13 @@ export function useWeatherAPI() {
 			}
 
 			//pull address from searchbar, otherwise fetch name from coords using reverse geolocation
-			const addressArray =
-				address || (await convertCoordsToLocation(lat, lon)?.addressArr);
+			let addressArray;
+			if (address) {
+				addressArray = address;
+			} else {
+				const data = await convertCoordsToLocation(lat, lon);
+				addressArray = data?.addressArr;
+			}
 
 			//object to be returned and eventually set to weather context state
 			const weatherData = {
@@ -89,7 +94,7 @@ export function useWeatherAPI() {
 
 			return weatherData;
 		} catch (err) {
-			console.error(err);
+			console.error('Could not fetch weather data');
 		}
 	};
 

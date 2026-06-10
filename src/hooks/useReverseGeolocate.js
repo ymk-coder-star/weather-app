@@ -16,7 +16,7 @@ export const useConvertCoordsToLocation = () => {
 
 			return { addressObj: loc, addressArr };
 		} catch (err) {
-			console.error(err.message);
+			console.error(err);
 			return null;
 		}
 	};
