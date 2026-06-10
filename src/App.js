@@ -1,35 +1,50 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { projectAuth } from './firestore/config';
+import { signInAnonymously } from 'firebase/auth';
+import { useUserContext } from './hooks/useUserContext';
+import { WeatherContextProvider } from './context/weatherContext';
 
 //components
-import LocationSearchForm from './components/LocationSearchForm';
+import CurLocationBtn from './components/CurLocationBtn';
+import LocationSearchForm from './components/locationSearchForm/LocationSearchForm';
+import ForecastOutput from './components/forecastOutput/ForecastOutput';
+import Sidebar from './components/Sidebar';
+import Footer from './components/footer/Footer';
 
 //styles
 import './App.css';
 
-function App() {
-	const [weatherData, setWeatherData] = useState({});
+export default function App() {
+	const { setUser } = useUserContext();
+	const [isFavourite, setIsFavourite] = useState(false);
 
-	const {
-		temperature_2m,
-		relative_humidity_2m,
-		precipitation,
-		wind_speed_10m,
-	} = weatherData.currentData ?? '';
+	useEffect(() => {
+		const signinAnon = async () => {
+			try {
+				const res = await signInAnonymously(projectAuth);
+				setUser(res.user);
+			} catch (err) {
+				console.error('Could not sign in: ', err);
+			}
+		};
+		signinAnon();
+	}, [setUser]);
 
 	return (
 		<div className="App">
-			<LocationSearchForm setWeatherData={setWeatherData} />
-			{
-				<div className="forecast-output">
-					<h3>Current weather</h3>
-					<p>Temperature {temperature_2m} Celsius</p>
-					<p>Humidity {relative_humidity_2m}%</p>
-					<p>Precipitation {precipitation}mm</p>
-					<p>Wind speed {wind_speed_10m}kmh</p>
-				</div>
-			}
+			<WeatherContextProvider>
+				<main className="content">
+					<section className="main-left">
+						<header className="location-form">
+							<CurLocationBtn />
+							<LocationSearchForm />
+						</header>
+						<ForecastOutput isFavourite={isFavourite} />
+					</section>
+					<Sidebar setIsFavourite={setIsFavourite} />
+				</main>
+				<Footer />
+			</WeatherContextProvider>
 		</div>
 	);
 }
-
-export default App;

@@ -1,38 +1,65 @@
-.App {
+.App{
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+.App .forecast-output {
+  display: grid;
+  grid-template-columns: 300px auto;
+  justify-items: center;
+}
+.App .forecast-output > div {
+  width: 100%;
+}
+.App .left-side {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.App .daily-wrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.App .day-card {
+  border: 1px solid gray;
+  padding: 10px;
+}
+.App ol.hourly-forecast {
+  list-style: none;
+}
+.App .content {
+  display: grid;
+  grid-template-columns: auto 180px;
+  flex: 1;
+}
+header {
+  position: sticky;
+  top: 0;
+}
+.App .sidebar {
+  background-color: rgb(144, 232, 147);
+  height: 100vh;
+  overflow-y: auto;
+}
+.place-card {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgb(73, 112, 28);
+  cursor: pointer;
+}
+.heading {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 20px;
+  align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.heading button {
+  padding-top: 3px;
+  margin-top: 4px;
+  margin-left: 30px;
+  margin-right: -50px;
+  width: 68px;
 }
