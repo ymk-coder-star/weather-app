@@ -1,0 +1,34 @@
+import { useEffect, useState } from 'react';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { projectFirestore } from '../firestore/config';
+import { useCustomContext } from './useCustomContext';
+import { UserContextType } from '../context/userContext';
+
+export function useCollection<T>(collectionName: string) {
+  const [documents, setDocuments] = useState<T[]>([]);
+  const { user } = useCustomContext<UserContextType>('UserContext');
+
+  useEffect(() => {
+    if (!user.uid) return;
+
+    const docQuery = query(
+      collection(projectFirestore, collectionName),
+      where('uid', '==', user.uid)
+    );
+
+    const unsubscribe = onSnapshot(docQuery, (snapshot) => {
+      try {
+        const documents: T[] = snapshot.docs.map(
+          (doc) => ({ ...doc.data(), id: doc.id }) as T
+        );
+        setDocuments(documents);
+      } catch (error) {
+        console.error('Error parsing firestore snapshot: ', error);
+      }
+    });
+
+    return unsubscribe;
+  }, [user, collectionName]);
+
+  return { documents };
+}

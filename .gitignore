@@ -10,7 +10,7 @@
 
 # production
 /build
-/src/firestore/config.js
+/src/firestore/config.ts
 
 # misc
 .DS_Store

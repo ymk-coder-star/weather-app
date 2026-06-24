@@ -1,4 +1,4 @@
-.App{
+.App {
   text-align: center;
   height: 100vh;
   display: flex;
@@ -24,6 +24,7 @@
 .App .day-card {
   border: 1px solid gray;
   padding: 10px;
+  cursor: pointer;
 }
 .App ol.hourly-forecast {
   list-style: none;
@@ -62,4 +63,36 @@ header {
   margin-left: 30px;
   margin-right: -50px;
   width: 68px;
+}
+footer {
+  width: 100%;
+  background-color: aqua;
+  padding-bottom: 30px;
+}
+.location-form {
+  display: flex;
+}
+
+.location-form > div {
+  flex: 1;
+}
+
+.location-form button {
+  display: inline-block;
+  cursor: pointer;
+  padding-inline: 10px;
+}
+
+/* Custom styles for react-select */
+.select__control {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.select__control .select__input {
+  text-align: center !important;
+}
+
+.select__value-container {
+  justify-content: center !important;
 }
