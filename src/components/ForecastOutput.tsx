@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useFirestore } from '../hooks/useFirestore';
-import { useGetCurrentLocationWeather } from '../hooks/useGetCurrentLocationWeather';
 import { useCustomContext } from '../hooks/useCustomContext';
 import { WeatherContextType } from '../context/weatherContext';
 import { UserContextType } from '../context/userContext';
@@ -15,7 +14,6 @@ import Hourly from './Hourly';
 import Daily from './Daily';
 
 export default function ForecastOutput({ isFavourite }: { isFavourite: boolean }) {
-  const { setWeatherFromCurrentLocation } = useGetCurrentLocationWeather();
   const { addDocument, deleteDocument } =
     useFirestore<AddFavouriteDocInterface>('favourites');
   const { weatherData } = useCustomContext<WeatherContextType>('WeatherContext');
@@ -24,10 +22,6 @@ export default function ForecastOutput({ isFavourite }: { isFavourite: boolean }
     date: undefined,
     displayDate: 'Today',
   });
-
-  useEffect(() => {
-    setWeatherFromCurrentLocation();
-  }, [setWeatherFromCurrentLocation]);
 
   useEffect(() => {
     setSelectedDay({ date: undefined, displayDate: 'Today' });
