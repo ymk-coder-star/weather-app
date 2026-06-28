@@ -1,4 +1,16 @@
 import { useCallback } from 'react';
+import { z } from 'zod';
+
+const AddressSchema = z.object({
+  address: z.object({
+    village: z.string().optional(),
+    town: z.string().optional(),
+    city: z.string().optional(),
+    county: z.string().optional(),
+    state: z.string().optional(),
+    country: z.string().optional(),
+  }),
+});
 
 export const useConvertCoordsToLocation = () => {
   const convertCoordsToLocation = useCallback(async (lat: number, lon: number) => {
@@ -6,25 +18,25 @@ export const useConvertCoordsToLocation = () => {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
       );
-      const data = await res.json();
+      const json = await res.json();
 
-      const location = data.address;
+      if (json.error) throw new Error(json.error);
 
-      if (location === undefined) throw new Error(`Could not get address: ${data.error}`);
+      const data = AddressSchema.parse(json);
 
       const addressArr: string[] = [
-        location.village,
-        location.town,
-        location.city,
-        location.county,
-        location.state,
-        location.country,
-      ].filter(Boolean);
+        data.address.village,
+        data.address.town,
+        data.address.city,
+        data.address.county,
+        data.address.state,
+        data.address.country,
+      ].filter((item): item is string => Boolean(item));
 
       return addressArr;
-    } catch (err) {
-      console.error(err);
-      return ['unnamed'];
+    } catch (error) {
+      console.error('Could not get address: ', error);
+      return ['(unnamed)'];
     }
   }, []);
 

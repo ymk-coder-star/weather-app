@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { projectFirestore } from '../firestore/config';
 import { useCustomContext } from './useCustomContext';
-import { UserContextType } from '../context/userContext';
+import type { UserContextType } from '../context/userContext';
 
 export function useCollection<T>(collectionName: string) {
   const [documents, setDocuments] = useState<T[]>([]);
@@ -18,9 +18,7 @@ export function useCollection<T>(collectionName: string) {
 
     const unsubscribe = onSnapshot(docQuery, (snapshot) => {
       try {
-        const documents: T[] = snapshot.docs.map(
-          (doc) => ({ ...doc.data(), id: doc.id }) as T
-        );
+        const documents: T[] = snapshot.docs.map((doc) => ({ ...doc.data() }) as T);
         setDocuments(documents);
       } catch (error) {
         console.error('Error parsing firestore snapshot: ', error);

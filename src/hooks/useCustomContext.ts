@@ -26,7 +26,7 @@ export function useCustomContext<T>(contextName: ContextInputType): T {
       throw new Error(`${contextName satisfies never} is not a valid context`);
   }
 
-  if (!context)
+  if (context == null)
     throw new Error(`${contextName} must be called inside a ${contextName}Provider`);
 
   return context as T;

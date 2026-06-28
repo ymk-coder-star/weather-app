@@ -1,24 +1,47 @@
 import { useCustomContext } from '../hooks/useCustomContext';
-import { WeatherContextType } from '../context/weatherContext';
-import { DateForHourlyInterface, HourDataInterface } from '../utilities/interfaces';
+import type { WeatherContextType } from '../context/weatherContext';
 
-export default function Hourly({
-  dayToDisplay,
-}: {
-  dayToDisplay: DateForHourlyInterface;
-}) {
+type HourData = {
+  time: Date;
+  temperature_2m: string;
+  precipitation_probability: string;
+  relative_humidity_2m: string;
+  wind_speed_10m: string;
+};
+
+export type HourlyDay = {
+  date: Date | undefined;
+  displayDate: string;
+};
+
+export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
   const { weatherData } = useCustomContext<WeatherContextType>('WeatherContext');
   const { hourly, hourly_units: units, current } = weatherData!;
-  const date = dayToDisplay.date;
 
-  let selectedDayHourlyArray: HourDataInterface[];
+  const hourlyDataArray: HourData[] = [];
+  for (let i = 0; i < hourly.time.length; i++) {
+    const hourData: HourData = {
+      time: new Date(hourly.time[i]!),
+      temperature_2m: hourly.temperature_2m[i]!.toFixed(0),
+      precipitation_probability: hourly.precipitation_probability[i]!.toFixed(0),
+      relative_humidity_2m: hourly.relative_humidity_2m[i]!.toFixed(0),
+      wind_speed_10m: hourly.wind_speed_10m[i]!.toFixed(0),
+    };
+    hourlyDataArray.push(hourData);
+  }
+
+  const date = dayToDisplay.date;
+  let selectedDayHourlyArray: HourData[];
   if (date === undefined) {
-    const currentTimeIndex = hourly.findIndex(
-      (hour) => hour.time.getHours() === current.time.getHours()
+    const currentTimeIndex = hourlyDataArray.findIndex(
+      (hour) => hour.time.getHours() === new Date(current.time).getHours()
     );
-    selectedDayHourlyArray = hourly.slice(currentTimeIndex, currentTimeIndex + 25);
+    selectedDayHourlyArray = hourlyDataArray.slice(
+      currentTimeIndex,
+      currentTimeIndex + 25
+    );
   } else {
-    selectedDayHourlyArray = hourly.filter(
+    selectedDayHourlyArray = hourlyDataArray.filter(
       (hour) => hour.time.getDate() === date.getDate()
     );
   }
@@ -33,7 +56,7 @@ export default function Hourly({
           <li key={Math.random()}>
             <p>
               <span>
-                {!date && index === 0
+                {date === undefined && index === 0
                   ? 'Now'
                   : hour.time.toLocaleTimeString(undefined, {
                       hour: '2-digit',

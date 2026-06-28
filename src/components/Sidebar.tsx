@@ -1,10 +1,11 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, type Dispatch, type SetStateAction } from 'react';
 import { useWeatherAPI } from '../hooks/useWeatherAPI';
 import { useCollection } from '../hooks/useCollection';
 import { useCustomContext } from '../hooks/useCustomContext';
-import { WeatherContextType } from '../context/weatherContext';
-import { UnitsContextType } from '../context/unitsContext';
-import { FavouriteDocInterface, WeatherDataInterface } from '../utilities/interfaces';
+import type { WeatherContextType } from '../context/weatherContext';
+import type { UnitsContextType } from '../context/unitsContext';
+import type { WeatherData } from '../utilities/weatherSchema&Type';
+import type { Document } from './ForecastOutput';
 
 type Props = {
   setIsFavourite: Dispatch<SetStateAction<boolean>>;
@@ -13,13 +14,11 @@ type Props = {
 export default function Sidebar({ setIsFavourite }: Props) {
   //extracting from the imported hooks and setting state
   const { fetchWeather } = useWeatherAPI();
-  const { documents } = useCollection<FavouriteDocInterface>('favourites');
+  const { documents } = useCollection<Document>('favourites');
+  const { units } = useCustomContext<UnitsContextType>('UnitsContext');
   const { weatherData, setWeatherData } =
     useCustomContext<WeatherContextType>('WeatherContext');
-  const { units } = useCustomContext<UnitsContextType>('UnitsContext');
-  const [favourites, setFavourites] = useState<
-    (WeatherDataInterface | FavouriteDocInterface)[]
-  >([]);
+  const [favourites, setFavourites] = useState<(WeatherData | Document)[]>([]);
 
   //check for 'favourites' firestore collection and get weather forecast on items
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function Sidebar({ setIsFavourite }: Props) {
             const receivedData = await fetchWeather(fetchWeatherParams);
 
             if (receivedData) {
-              return { ...receivedData, id: document.id };
+              return { ...receivedData };
             } else {
               return document;
             }
@@ -67,13 +66,13 @@ export default function Sidebar({ setIsFavourite }: Props) {
           favourite.longitude === weatherData.longitude
         ) {
           setIsFavourite(true);
-          return;
+          break;
         }
       }
     }
   }, [weatherData, favourites, setIsFavourite]);
 
-  const handleClick = (location: WeatherDataInterface) => {
+  const handleClick = (location: WeatherData) => {
     setWeatherData(location);
   };
 
@@ -86,7 +85,7 @@ export default function Sidebar({ setIsFavourite }: Props) {
           return (
             <div
               className="place-card"
-              key={favourite.id}
+              key={Math.random()}
               onClick={() => handleClick(favourite)}
             >
               <p>{favourite.address[0]}</p>
@@ -98,7 +97,7 @@ export default function Sidebar({ setIsFavourite }: Props) {
           );
         else
           return (
-            <div className="place-card disabled" key={favourite.id}>
+            <div className="place-card disabled" key={Math.random()}>
               <p>{favourite.address[0]}</p>
             </div>
           );

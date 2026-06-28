@@ -1,5 +1,5 @@
 import { useCustomContext } from '../hooks/useCustomContext';
-import { WeatherContextType } from '../context/weatherContext';
+import type { WeatherContextType } from '../context/weatherContext';
 
 export default function Current() {
   const { weatherData } = useCustomContext<WeatherContextType>('WeatherContext');

@@ -1,37 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useFirestore } from '../hooks/useFirestore';
 import { useCustomContext } from '../hooks/useCustomContext';
-import { WeatherContextType } from '../context/weatherContext';
-import { UserContextType } from '../context/userContext';
-import {
-  AddFavouriteDocInterface,
-  DateForHourlyInterface,
-} from '../utilities/interfaces';
+import type { WeatherContextType } from '../context/weatherContext';
+import type { UserContextType } from '../context/userContext';
+import type { HourlyDay } from './Hourly';
 
 //components
 import Current from './Current';
 import Hourly from './Hourly';
 import Daily from './Daily';
 
+export type Document = {
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  address: string[];
+  uid: string;
+};
+
+const hourlyDefaultHeading = { date: undefined, displayDate: 'Today' };
+
 export default function ForecastOutput({ isFavourite }: { isFavourite: boolean }) {
-  const { addDocument, deleteDocument } =
-    useFirestore<AddFavouriteDocInterface>('favourites');
+  const [selectedDay, setSelectedDay] = useState<HourlyDay>(hourlyDefaultHeading);
+  const { addDocument, deleteDocument } = useFirestore<Document>('favourites');
   const { weatherData } = useCustomContext<WeatherContextType>('WeatherContext');
   const { user } = useCustomContext<UserContextType>('UserContext');
-  const [selectedDay, setSelectedDay] = useState<DateForHourlyInterface>({
-    date: undefined,
-    displayDate: 'Today',
-  });
 
   useEffect(() => {
-    setSelectedDay({ date: undefined, displayDate: 'Today' });
-  }, [weatherData?.hourly]);
+    setSelectedDay(hourlyDefaultHeading);
+  }, [weatherData]);
 
   const handleAdd = () => {
-    if (!user.uid) return;
-    if (!weatherData) return;
+    if (user.uid == null) return;
+    if (weatherData == null) return;
 
-    const doc: AddFavouriteDocInterface = {
+    const doc: Document = {
       latitude: weatherData.latitude,
       longitude: weatherData.longitude,
       timezone: weatherData.timezone,
@@ -44,39 +47,58 @@ export default function ForecastOutput({ isFavourite }: { isFavourite: boolean }
   };
 
   const handleRemove = () => {
-    if (!user.uid) return;
-    if (!weatherData) return;
+    if (user.uid == null) return;
+    if (weatherData == null) return;
 
     const docId = `${user.uid}&${weatherData.latitude}:${weatherData.longitude}`;
 
     deleteDocument(docId);
   };
 
-  return (
-    <div>
-      {weatherData === undefined && (
+  if (weatherData === undefined)
+    return (
+      <div>
         <h4>Search for a place or enable location in browser settings</h4>
-      )}
-      {weatherData === null && <h4>Could not fetch weather forecast</h4>}
-      {weatherData && (
-        <>
-          <div className="heading">
-            {<h3>{weatherData.address.join(', ')}</h3>}
-            {!isFavourite && <button onClick={handleAdd}>Add</button>}
-            {isFavourite && <button onClick={handleRemove}>Remove</button>}
-          </div>
+      </div>
+    );
 
-          <div className="forecast-output">
-            <div className="left-side">
-              <Hourly dayToDisplay={selectedDay} />
-            </div>
-            <div className="right-side">
-              <Current />
-              <Daily setHourlyDay={setSelectedDay} />
-            </div>
+  if (weatherData === null)
+    return (
+      <div>
+        <h4>Unable to load data</h4>
+      </div>
+    );
+
+  if (weatherData)
+    return (
+      <div>
+        <div className="heading">
+          {<h3>{weatherData.address.join(', ')}</h3>}
+          {!isFavourite && <button onClick={handleAdd}>Add</button>}
+          {isFavourite && <button onClick={handleRemove}>Remove</button>}
+        </div>
+
+        <div className="forecast-output">
+          <div className="left-side">
+            <Hourly dayToDisplay={selectedDay} />
           </div>
-        </>
-      )}
-    </div>
-  );
+          <div className="right-side">
+            <Current />
+            <Daily setHourlyDay={setSelectedDay} />
+          </div>
+        </div>
+      </div>
+    );
+
+  // return (
+  //   // <div>
+  //   //   {weatherData === undefined && (
+  //   //   )}
+  //     {weatherData === null && <h4>Unable to load weather data</h4>}
+  //     {weatherData && (
+  //       <>
+  //       </>
+  //     )}
+  //   </div>
+  // );
 }

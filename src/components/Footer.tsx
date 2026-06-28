@@ -1,9 +1,14 @@
-import { useReducer, ChangeEvent, SubmitEvent } from 'react';
+import { useReducer, type ChangeEvent, type SubmitEvent } from 'react';
 import { useWeatherAPI } from '../hooks/useWeatherAPI';
 import { useCustomContext } from '../hooks/useCustomContext';
-import { WeatherContextType } from '../context/weatherContext';
-import { UnitsContextType } from '../context/unitsContext';
-import { UnitsInterface } from '../utilities/interfaces';
+import type { WeatherContextType } from '../context/weatherContext';
+import type { UnitsContextType } from '../context/unitsContext';
+
+export type Units = {
+  tempUnit?: string;
+  speedUnit?: string;
+  heightUnit?: string;
+};
 
 export default function Footer() {
   const { fetchWeather } = useWeatherAPI();
@@ -12,10 +17,7 @@ export default function Footer() {
   const { setUnits: setWeatherUnits } =
     useCustomContext<UnitsContextType>('UnitsContext');
 
-  const unitsReducer = (
-    state: UnitsInterface,
-    action: { type: string; payload: string }
-  ) => {
+  const unitsReducer = (state: Units, action: { type: string; payload: string }) => {
     switch (action.type) {
       case 'EDIT_TEMP_UNIT':
         return { ...state, tempUnit: action.payload };
@@ -44,7 +46,7 @@ export default function Footer() {
 
     setWeatherUnits(units);
 
-    if (!weatherData) return;
+    if (weatherData == null) return;
 
     const data = await fetchWeather({ ...weatherData, units });
     setWeatherData(data);

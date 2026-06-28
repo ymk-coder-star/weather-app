@@ -1,7 +1,8 @@
-import { createContext, useState, Dispatch, SetStateAction, ReactNode } from 'react';
-import { WeatherDataInterface } from '../utilities/interfaces';
+import { createContext, useState } from 'react';
+import type { Dispatch, SetStateAction, ReactNode } from 'react';
+import type { WeatherData } from '../utilities/weatherSchema&Type';
 
-type WeatherStateType = WeatherDataInterface | undefined | null;
+type WeatherStateType = WeatherData | undefined | null;
 
 export type WeatherContextType = {
   weatherData: WeatherStateType;

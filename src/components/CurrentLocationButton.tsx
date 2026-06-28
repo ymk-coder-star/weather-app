@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useRef } from 'react';
 import { useGetCurrentLocationWeather } from '../hooks/useGetCurrentLocationWeather';
 
 export default function CurrentLocationButton() {

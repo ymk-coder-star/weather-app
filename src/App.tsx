@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { projectAuth } from './firestore/config';
 import { signInAnonymously } from 'firebase/auth';
-import { useCustomContext } from './hooks/useCustomContext';
-import { UserContextType } from './context/userContext';
-import { WeatherContextProvider } from './context/weatherContext';
+import { useEffect, useState } from 'react';
 import { UnitsContextProvider } from './context/unitsContext';
+import type { UserContextType } from './context/userContext';
+import { WeatherContextProvider } from './context/weatherContext';
+import { projectAuth } from './firestore/config';
+import { useCustomContext } from './hooks/useCustomContext';
 
 //components
 import CurrentLocationButton from './components/CurrentLocationButton';
-import LocationSearchForm from './components/LocationSearchForm';
-import ForecastOutput from './components/ForecastOutput';
-import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
+import ForecastOutput from './components/ForecastOutput';
+import LocationSearchForm from './components/LocationSearchForm';
+import Sidebar from './components/Sidebar';
 
 //styles
 import './App.css';
