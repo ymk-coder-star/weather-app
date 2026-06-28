@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useFirestore } from '../hooks/useFirestore';
-import { useCustomContext } from '../hooks/useCustomContext';
-import type { WeatherContextType } from '../context/weatherContext';
 import type { UserContextType } from '../context/userContext';
+import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from '../hooks/useCustomContext';
+import { useFirestore } from '../hooks/useFirestore';
 import type { HourlyDay } from './Hourly';
 
 //components
 import Current from './Current';
-import Hourly from './Hourly';
 import Daily from './Daily';
+import Hourly from './Hourly';
 
 export type Document = {
   latitude: number;
@@ -69,36 +69,23 @@ export default function ForecastOutput({ isFavourite }: { isFavourite: boolean }
       </div>
     );
 
-  if (weatherData)
-    return (
-      <div>
-        <div className="heading">
-          {<h3>{weatherData.address.join(', ')}</h3>}
-          {!isFavourite && <button onClick={handleAdd}>Add</button>}
-          {isFavourite && <button onClick={handleRemove}>Remove</button>}
-        </div>
+  return (
+    <div>
+      <div className="heading">
+        {<h3>{weatherData.address.join(', ')}</h3>}
+        {!isFavourite && <button onClick={handleAdd}>Add</button>}
+        {isFavourite && <button onClick={handleRemove}>Remove</button>}
+      </div>
 
-        <div className="forecast-output">
-          <div className="left-side">
-            <Hourly dayToDisplay={selectedDay} />
-          </div>
-          <div className="right-side">
-            <Current />
-            <Daily setHourlyDay={setSelectedDay} />
-          </div>
+      <div className="forecast-output">
+        <div className="left-side">
+          <Hourly dayToDisplay={selectedDay} />
+        </div>
+        <div className="right-side">
+          <Current />
+          <Daily setHourlyDay={setSelectedDay} />
         </div>
       </div>
-    );
-
-  // return (
-  //   // <div>
-  //   //   {weatherData === undefined && (
-  //   //   )}
-  //     {weatherData === null && <h4>Unable to load weather data</h4>}
-  //     {weatherData && (
-  //       <>
-  //       </>
-  //     )}
-  //   </div>
-  // );
+    </div>
+  );
 }
