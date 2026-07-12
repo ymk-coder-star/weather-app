@@ -47,9 +47,11 @@ Make sure you have the following installed:
 
 ### Installation
 
+Run these commands in your terminal
+
 1. Clone the repository
 
-   git clone https://github.com/your-username/weather-app.git
+   git clone https://github.com/ymk-coder-star/weather-app.git
 
    cd weather-app
 
@@ -57,9 +59,17 @@ Make sure you have the following installed:
 
    npm install
 
+   or
+
+   yarn install
+
 3. Start the development server
 
    npm start
+
+   or
+
+   yarn start
 
 4. Open the app in your browser at
 
@@ -75,14 +85,16 @@ Make sure you have the following installed:
 
 ## Firebase Setup
 
-This project already includes a Firebase configuration inside the app source. If you want to use your own Firebase project, update the settings in:
+This project uses Firebase for anonymous sign-in and saved favourites. Because the Firestore configuration file is private and not included in the GitHub repository, you will need to add your own Firebase setup locally.
 
-- src/firestore/config.ts
+To do that:
 
-You will also need to enable:
+1. Create your own Firebase project in the Firebase console
+2. Enable Anonymous Authentication
+3. Enable Firestore Database
+4. Add your own Firebase configuration in the app source file for your local environment
 
-- Anonymous Authentication
-- Firestore Database
+The app expects Firebase to be available for sign-in and storing favourite locations.
 
 ## Available Scripts
 
