@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+Weather Forecast Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive weather forecast application built with React.js and TypeScript that delivers accurate, real-time weather information through a clean and interactive user interface. The application integrates multiple APIs to provide worldwide location search, detailed weather forecasts, geolocation services, and personalised features backed by Firebase.
 
-## Available Scripts
+Features
+Search for locations worldwide using an autocomplete search powered by a location API.
+Automatically detect the user's current location on page load or by using a dedicated Current Location button.
+Reverse geocoding to convert geographic coordinates into readable location names.
+Display current weather conditions for any selected location.
+View a 7-day weather forecast.
+Select any day in the forecast to display a detailed hourly forecast.
+Dynamically switch between metric and imperial units, updating:
+Temperature
+Wind speed
+Precipitation
+Other weather measurements throughout the application.
+Save favourite locations using Firebase Anonymous Authentication and Cloud Firestore.
+Responsive design optimised for desktop, tablet, and mobile devices.
+Loading states and error handling to provide a smooth user experience.
 
-In the project directory, you can run:
+Technologies
+React.js
+TypeScript
+HTML5
+CSS3
+Weather API
+Location Search API
+Geolocation & Reverse Geocoding APIs
+Fetch API
+Firebase Authentication (Anonymous)
+Cloud Firestore
+Git & GitHub
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+What I Learned
+This project strengthened my skills in building scalable front-end applications using React and TypeScript. I gained practical experience integrating multiple third-party APIs, managing asynchronous data, handling application state, implementing authentication and cloud data storage with Firebase, working with browser geolocation, and creating responsive, user-focused interfaces. The project also improved my understanding of component-based architecture, reusable code, and writing clean, maintainable TypeScript.
