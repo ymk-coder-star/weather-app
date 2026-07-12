@@ -1,5 +1,5 @@
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { createContext, useState } from 'react';
-import type { Dispatch, SetStateAction, ReactNode } from 'react';
 import type { WeatherData } from '../utilities/weatherSchema&Type';
 
 type WeatherStateType = WeatherData | undefined | null;

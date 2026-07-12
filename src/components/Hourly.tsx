@@ -1,5 +1,5 @@
-import { useCustomContext } from '../hooks/useCustomContext';
 import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from '../hooks/useCustomContext';
 
 type HourData = {
   time: Date;
@@ -42,7 +42,7 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
     );
   } else {
     selectedDayHourlyArray = hourlyDataArray.filter(
-      (hour) => hour.time.getDate() === date.getDate()
+      (hour) => hour.time.toDateString() === date.toDateString()
     );
   }
 
@@ -53,7 +53,7 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
 
       <ol className="hourly-forecast">
         {selectedDayHourlyArray.map((hour, index) => (
-          <li key={Math.random()}>
+          <li key={hour.time.toISOString()}>
             <p>
               <span>
                 {date === undefined && index === 0

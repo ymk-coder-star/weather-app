@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import Select from 'react-select';
 import { useState } from 'react';
-import { useWeatherAPI } from '../hooks/useWeatherAPI';
-import { useCustomContext } from '../hooks/useCustomContext';
+import Select from 'react-select';
+import { z } from 'zod';
 import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from '../hooks/useCustomContext';
 import type { FetchParams } from '../hooks/useWeatherAPI';
+import { useWeatherAPI } from '../hooks/useWeatherAPI';
 
 const AddressSchema = z.object({
   results: z

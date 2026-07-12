@@ -1,11 +1,11 @@
-import { projectFirestore } from '../firestore/config';
 import {
+  collection,
+  deleteDoc,
   doc,
   setDoc,
-  deleteDoc,
-  collection,
   type DocumentData,
 } from 'firebase/firestore';
+import { projectFirestore } from '../firestore/config';
 
 export function useFirestore<T extends DocumentData>(collectionName: string) {
   const colRef = collection(projectFirestore, collectionName);

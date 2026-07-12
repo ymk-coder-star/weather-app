@@ -1,8 +1,8 @@
 import { useReducer, type ChangeEvent, type SubmitEvent } from 'react';
-import { useWeatherAPI } from '../hooks/useWeatherAPI';
-import { useCustomContext } from '../hooks/useCustomContext';
-import type { WeatherContextType } from '../context/weatherContext';
 import type { UnitsContextType } from '../context/unitsContext';
+import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from '../hooks/useCustomContext';
+import { useWeatherAPI } from '../hooks/useWeatherAPI';
 
 export type Units = {
   tempUnit?: string;

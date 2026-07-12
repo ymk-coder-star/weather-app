@@ -1,35 +1,106 @@
-Weather Forecast Application
+# Weather Forecast App
 
-A modern, responsive weather forecast application built with React.js and TypeScript that delivers accurate, real-time weather information through a clean and interactive user interface. The application integrates multiple APIs to provide worldwide location search, detailed weather forecasts, geolocation services, and personalised features backed by Firebase.
+A polished, responsive weather dashboard built with React and TypeScript. This app lets users search for locations worldwide, view live weather conditions, explore daily and hourly forecasts, switch unit systems, and save favourite places with Firebase.
 
-Features
-Search for locations worldwide using an autocomplete search powered by a location API.
-Automatically detect the user's current location on page load or by using a dedicated Current Location button.
-Reverse geocoding to convert geographic coordinates into readable location names.
-Display current weather conditions for any selected location.
-View a 7-day weather forecast.
-Select any day in the forecast to display a detailed hourly forecast.
-Dynamically switch between metric and imperial units, updating:
-Temperature
-Wind speed
-Precipitation
-Other weather measurements throughout the application.
-Save favourite locations using Firebase Anonymous Authentication and Cloud Firestore.
-Responsive design optimised for desktop, tablet, and mobile devices.
-Loading states and error handling to provide a smooth user experience.
+## Overview
 
-Technologies
-React.js
-TypeScript
-HTML5
-CSS3
-Weather API
-Location Search API
-Geolocation & Reverse Geocoding APIs
-Fetch API
-Firebase Authentication (Anonymous)
-Cloud Firestore
-Git & GitHub
+Weather Forecast App is a modern front-end project designed to make weather data simple, fast, and visually clear. It combines geolocation, location search, weather forecasting, and cloud-backed favourites into a single user-friendly experience.
 
-What I Learned
-This project strengthened my skills in building scalable front-end applications using React and TypeScript. I gained practical experience integrating multiple third-party APIs, managing asynchronous data, handling application state, implementing authentication and cloud data storage with Firebase, working with browser geolocation, and creating responsive, user-focused interfaces. The project also improved my understanding of component-based architecture, reusable code, and writing clean, maintainable TypeScript.
+## Features
+
+- Search for any place in the world using an interactive location search bar
+- Detect the user's current location with browser geolocation
+- View current weather conditions, including temperature, humidity, precipitation, and wind
+- Browse a 7-day forecast and inspect hourly details for any selected day
+- Switch between metric and imperial units for temperature, wind speed, and precipitation
+- Save favourite locations using Firebase Authentication and Firestore
+- Enjoy a responsive layout that works well on desktop, tablet, and mobile screens
+- Handle loading and error states gracefully for a smoother experience
+
+## Tech Stack
+
+- React.js
+- TypeScript
+- CSS3
+- Firebase Authentication
+- Cloud Firestore
+- Open-Meteo API for weather and geocoding data
+- React Select for searchable location dropdowns
+- Zod for API response validation
+
+## Project Structure
+
+- src/components: UI components such as current conditions, daily forecast, hourly forecast, search form, sidebar, and footer
+- src/context: global state for weather, units, and user information
+- src/hooks: reusable hooks for fetching weather data, location data, Firestore collections, and custom context access
+- src/firestore: Firebase configuration and initialization
+- src/utilities: weather schemas and TypeScript types
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (recommended: 18 or newer)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+
+   git clone https://github.com/your-username/weather-app.git
+
+   cd weather-app
+
+2. Install dependencies
+
+   npm install
+
+3. Start the development server
+
+   npm start
+
+4. Open the app in your browser at
+
+   http://localhost:3000
+
+## How It Works
+
+1. The app signs in the user anonymously through Firebase on load.
+2. Users can either search for a location or use their current location.
+3. Weather data is fetched from the Open-Meteo API and displayed in the main forecast view.
+4. The user can toggle units and explore daily or hourly details.
+5. Favourite locations are stored in Firestore and shown in the sidebar.
+
+## Firebase Setup
+
+This project already includes a Firebase configuration inside the app source. If you want to use your own Firebase project, update the settings in:
+
+- src/firestore/config.ts
+
+You will also need to enable:
+
+- Anonymous Authentication
+- Firestore Database
+
+## Available Scripts
+
+- npm start: starts the development server
+- npm build: creates a production build
+- npm test: runs the test suite
+
+## Learning Notes
+
+This project was built to strengthen skills in:
+
+- React and TypeScript component architecture
+- API integration and data validation
+- State management with context
+- Asynchronous data fetching and error handling
+- Firebase authentication and cloud storage
+- Building responsive user interfaces
+
+## License
+
+This project is open for learning and personal use.

@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
+import type { Units } from '../components/Footer';
+import type { UnitsContextType } from '../context/unitsContext';
+import { WeatherSchema, type WeatherData } from '../utilities/weatherSchema&Type';
 import { useConvertCoordsToLocation } from './useConvertCoordsToLocation';
 import { useCustomContext } from './useCustomContext';
-import { WeatherSchema, type WeatherData } from '../utilities/weatherSchema&Type';
-import type { UnitsContextType } from '../context/unitsContext';
-import type { Units } from '../components/Footer';
 
 export type FetchParams = {
   latitude: number;

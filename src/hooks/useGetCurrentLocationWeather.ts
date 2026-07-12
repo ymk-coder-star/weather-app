@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useWeatherAPI } from './useWeatherAPI';
-import { useCustomContext } from './useCustomContext';
 import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from './useCustomContext';
+import { useWeatherAPI } from './useWeatherAPI';
 
 export function useGetCurrentLocationWeather() {
   const { fetchWeather } = useWeatherAPI();

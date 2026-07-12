@@ -1,7 +1,7 @@
-import { useCustomContext } from '../hooks/useCustomContext';
-import { codes } from '../utilities/weatherCodes';
 import type { Dispatch, SetStateAction } from 'react';
 import type { WeatherContextType } from '../context/weatherContext';
+import { useCustomContext } from '../hooks/useCustomContext';
+import { codes } from '../utilities/weatherCodes';
 import type { HourlyDay } from './Hourly';
 
 type DayData = {
@@ -60,11 +60,11 @@ export default function Daily({
           return (
             <div
               className="day-card"
-              key={Math.random()}
+              key={day.day.toISOString()}
               onClick={() => setHourlyDay({ date: day.day, displayDate: dayToDisplay })}
             >
               <p>{dayToDisplay}</p>
-              <p>{codes[day.weatherCode]}</p>
+              <p>{codes[day.weatherCode] ?? `Unknown (${day.weatherCode})`}</p>
               <p>
                 min/max {day.tempMin}°/{day.tempMax}°
               </p>

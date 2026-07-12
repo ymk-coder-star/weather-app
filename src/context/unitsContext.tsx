@@ -1,5 +1,5 @@
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { createContext, useState } from 'react';
-import type { Dispatch, SetStateAction, ReactNode } from 'react';
 import type { Units } from '../components/Footer';
 
 type UnitsState = Units | undefined;

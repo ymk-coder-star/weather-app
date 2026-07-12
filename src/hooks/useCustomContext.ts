@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { WeatherContext } from '../context/weatherContext';
-import { UserContext } from '../context/userContext';
 import { UnitsContext } from '../context/unitsContext';
+import { UserContext } from '../context/userContext';
+import { WeatherContext } from '../context/weatherContext';
 
 type ContextInputType = 'WeatherContext' | 'UserContext' | 'UnitsContext';
 

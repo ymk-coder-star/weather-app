@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import type { UserContextType } from '../context/userContext';
 import { projectFirestore } from '../firestore/config';
 import { useCustomContext } from './useCustomContext';
-import type { UserContextType } from '../context/userContext';
 
 export function useCollection<T>(collectionName: string) {
   const [documents, setDocuments] = useState<T[]>([]);

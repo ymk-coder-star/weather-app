@@ -1,9 +1,9 @@
-import { useState, useEffect, type Dispatch, type SetStateAction } from 'react';
-import { useWeatherAPI } from '../hooks/useWeatherAPI';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import type { UnitsContextType } from '../context/unitsContext';
+import type { WeatherContextType } from '../context/weatherContext';
 import { useCollection } from '../hooks/useCollection';
 import { useCustomContext } from '../hooks/useCustomContext';
-import type { WeatherContextType } from '../context/weatherContext';
-import type { UnitsContextType } from '../context/unitsContext';
+import { useWeatherAPI } from '../hooks/useWeatherAPI';
 import type { WeatherData } from '../utilities/weatherSchema&Type';
 import type { Document } from './ForecastOutput';
 
@@ -85,7 +85,7 @@ export default function Sidebar({ setIsFavourite }: Props) {
           return (
             <div
               className="place-card"
-              key={Math.random()}
+              key={favourite.latitude.toString() + favourite.longitude.toString()}
               onClick={() => handleClick(favourite)}
             >
               <p>{favourite.address[0]}</p>
