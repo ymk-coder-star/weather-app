@@ -14,8 +14,9 @@ export type FetchParams = {
 };
 
 const query = {
-  current: 'temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m',
-  hourly: 'temperature_2m,precipitation_probability,relative_humidity_2m,wind_speed_10m',
+  current: 'temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,is_day,weather_code',
+  hourly:
+    'temperature_2m,precipitation_probability,relative_humidity_2m,wind_speed_10m,weather_code,is_day',
   daily:
     'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_mean,precipitation_sum',
 };
@@ -41,6 +42,11 @@ export function useWeatherAPI() {
 
       try {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+
+        if (!response.ok) {
+          throw new Error(`Weather request failed with status: ${response.status}`);
+        }
+
         const json = await response.json();
         const data = WeatherSchema.parse(json);
 

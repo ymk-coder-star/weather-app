@@ -1,9 +1,8 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { createContext, useState } from 'react';
+import type { User } from 'firebase/auth';
 
-type UserStateType = {
-  uid: string | undefined;
-};
+type UserStateType = User | { uid: undefined };
 
 export type UserContextType = {
   user: UserStateType;

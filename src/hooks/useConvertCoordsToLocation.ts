@@ -18,6 +18,11 @@ export const useConvertCoordsToLocation = () => {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
       );
+
+      if (!res.ok) {
+        throw new Error(`Reverse geocoding request failed with status: ${res.status}`);
+      }
+
       const json = await res.json();
 
       if (json.error) throw new Error(json.error);

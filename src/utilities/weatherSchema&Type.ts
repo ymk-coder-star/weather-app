@@ -21,6 +21,8 @@ const HourlySchema = z
     relative_humidity_2m: z.array(z.number()),
     temperature_2m: z.array(z.number()),
     wind_speed_10m: z.array(z.number()),
+    weather_code: z.array(z.number()),
+    is_day: z.array(z.number()),
   })
   .refine((hourly) => {
     const lengths = Object.values(hourly).map((arr) => arr.length);
@@ -37,6 +39,8 @@ export const WeatherSchema = z.object({
     relative_humidity_2m: z.number(),
     temperature_2m: z.number(),
     wind_speed_10m: z.number(),
+    is_day: z.number(),
+    weather_code: z.number(),
   }),
   daily: DailySchema,
   hourly: HourlySchema,
