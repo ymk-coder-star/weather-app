@@ -65,8 +65,10 @@ function SearchLoadingIndicator() {
 
 export default function LocationSearchForm() {
   const { fetchWeather } = useWeatherAPI();
-  const { setWeatherData } = useCustomContext<WeatherContextType>('WeatherContext');
+  const { beginWeatherRequest, completeWeatherRequest } =
+    useCustomContext<WeatherContextType>('WeatherContext');
   const latestRequest = useRef(0);
+  const latestWeatherRequest = useRef(0);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingWeather, setIsLoadingWeather] = useState(false);
   const [selectedOption, setSelectedOption] = useState<LocationOption | null>(null);
@@ -114,13 +116,18 @@ export default function LocationSearchForm() {
   };
 
   const handleSelect = async (params: FetchParams) => {
+    const localRequest = ++latestWeatherRequest.current;
+    const weatherRequest = beginWeatherRequest();
     setIsLoadingWeather(true);
+
     try {
       const weatherData = await fetchWeather(params);
-      if (weatherData != null) setWeatherData(weatherData);
+      if (weatherData != null) completeWeatherRequest(weatherRequest, weatherData);
     } finally {
-      setIsLoadingWeather(false);
-      setSelectedOption(null);
+      if (localRequest === latestWeatherRequest.current) {
+        setIsLoadingWeather(false);
+        setSelectedOption(null);
+      }
     }
   };
 

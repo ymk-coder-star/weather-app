@@ -92,7 +92,7 @@ export default function Sidebar({ setIsFavourite, onClose, onLocationSelect }: P
     <div className="flex h-full flex-col rounded-2xl border border-sky-300/50 bg-gradient-to-br from-sky-100/90 via-cyan-50/90 to-teal-100/85 p-3 text-slate-800 shadow-lg shadow-sky-900/10 backdrop-blur-md sm:rounded-3xl sm:p-5 lg:h-auto">
       <div className="flex items-center justify-between gap-2 sm:gap-3">
         <div>
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-sky-700/70 sm:text-xs sm:tracking-[0.18em]">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sky-700/70 sm:tracking-[0.18em]">
             Your list
           </p>
           <h2 className="text-base font-bold tracking-tight sm:mt-1 sm:text-lg">Saved places</h2>
@@ -150,7 +150,7 @@ export default function Sidebar({ setIsFavourite, onClose, onLocationSelect }: P
                   <p className="truncate text-xs font-semibold sm:text-sm">
                     {favourite.address[0]}
                   </p>
-                  <p className="truncate text-[0.65rem] text-slate-500 sm:mt-0.5 sm:text-xs">
+                  <p className="mt-0.5 truncate text-xs text-slate-500">
                     {condition}
                   </p>
                 </div>
@@ -161,7 +161,7 @@ export default function Sidebar({ setIsFavourite, onClose, onLocationSelect }: P
                   </p>
                   <FontAwesomeIcon
                     icon={faArrowRight}
-                    className="text-[0.65rem] text-sky-600 transition group-hover:translate-x-0.5 sm:text-xs"
+                    className="text-xs text-sky-600 transition group-hover:translate-x-0.5"
                   />
                 </div>
               </button>

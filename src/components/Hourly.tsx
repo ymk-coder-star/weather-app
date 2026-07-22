@@ -89,20 +89,20 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
 
   return (
     <>
-      <div className="mb-2 flex items-end justify-between gap-2 sm:mb-5 sm:gap-4">
+      <div className="mb-3 flex items-end justify-between gap-3 sm:mb-5 sm:gap-4">
         <div>
-          <h2 className="text-sm font-bold tracking-tight text-slate-800 sm:text-lg">
+          <h2 className="text-base font-bold tracking-tight text-slate-800 sm:text-lg">
             Hourly forecast
           </h2>
-          <p className="text-[0.65rem] text-slate-500 sm:mt-1 sm:text-sm">
+          <p className="mt-0.5 text-xs text-slate-500 sm:mt-1 sm:text-sm">
             {dayToDisplay.displayDate}
           </p>
         </div>
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <button
             type="button"
             onClick={() => scrollHourly(-6)}
-            className="grid h-7 w-7 place-items-center rounded-md border border-sky-200 bg-sky-50 text-[0.65rem] text-sky-700 transition hover:bg-sky-100 active:scale-95 sm:h-9 sm:w-9 sm:rounded-xl sm:text-sm"
+            className="grid h-8 w-8 place-items-center rounded-lg border border-sky-200 bg-sky-50 text-xs text-sky-700 transition hover:bg-sky-100 active:scale-95 sm:h-9 sm:w-9 sm:rounded-xl sm:text-sm"
             aria-label="View earlier hours"
           >
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -110,7 +110,7 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
           <button
             type="button"
             onClick={() => scrollHourly(6)}
-            className="grid h-7 w-7 place-items-center rounded-md border border-sky-200 bg-sky-50 text-[0.65rem] text-sky-700 transition hover:bg-sky-100 active:scale-95 sm:h-9 sm:w-9 sm:rounded-xl sm:text-sm"
+            className="grid h-8 w-8 place-items-center rounded-lg border border-sky-200 bg-sky-50 text-xs text-sky-700 transition hover:bg-sky-100 active:scale-95 sm:h-9 sm:w-9 sm:rounded-xl sm:text-sm"
             aria-label="View later hours"
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -120,7 +120,7 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
 
       <ol
         ref={hourlyListRef}
-        className="flex snap-x gap-1.5 overflow-x-auto pb-0.5 sm:gap-3 sm:pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x gap-2 overflow-x-auto pb-1 sm:gap-3 sm:pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {selectedDayHourlyArray.map((hour, index) => {
           const isNow = date === undefined && index === 0;
@@ -131,14 +131,14 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
             <li
               key={hour.time.toISOString()}
               data-hour={hour.time.getHours()}
-              className={`flex min-w-[4.75rem] snap-start flex-col items-center rounded-lg px-1.5 py-2 text-center transition sm:min-w-[7.25rem] sm:rounded-2xl sm:px-3 sm:py-4 ${
+              className={`flex min-w-[5.5rem] snap-start flex-col items-center rounded-xl px-2 py-2.5 text-center transition sm:min-w-[7.25rem] sm:rounded-2xl sm:px-3 sm:py-4 ${
                 isNow
                   ? 'bg-gradient-to-b from-sky-500 to-teal-600 text-white shadow-md shadow-sky-900/15'
                   : 'border border-sky-300/60 bg-gradient-to-b from-sky-50 to-cyan-100/90 text-slate-800 hover:border-sky-400 hover:from-sky-100'
               }`}
             >
               <p
-                className={`text-[0.6rem] font-semibold sm:text-xs ${
+                className={`text-xs font-semibold ${
                   isNow ? 'text-sky-100' : 'text-slate-500'
                 }`}
               >
@@ -153,14 +153,14 @@ export default function Hourly({ dayToDisplay }: { dayToDisplay: HourlyDay }) {
                 type={iconType}
                 title={condition}
                 isDay={hour.is_day}
-                className="mt-0.5 h-7 w-7 sm:mt-2 sm:h-11 sm:w-11"
+                className="mt-1 h-9 w-9 sm:mt-2 sm:h-11 sm:w-11"
               />
-              <p className="mt-0.5 text-base font-semibold tracking-tight sm:mt-2 sm:text-2xl">
+              <p className="mt-1 text-xl font-semibold tracking-tight sm:mt-2 sm:text-2xl">
                 {hour.temperature_2m}
                 {units.temperature_2m}
               </p>
               <p
-                className={`mt-1 text-[0.6rem] sm:mt-3 sm:text-xs ${
+                className={`mt-1.5 text-xs sm:mt-3 ${
                   isNow ? 'text-sky-100' : 'text-slate-500'
                 }`}
               >

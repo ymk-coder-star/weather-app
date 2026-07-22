@@ -28,9 +28,10 @@ const hourlyDefaultHeading = { date: undefined, displayDate: 'Today' };
 
 type Props = {
   isFavourite: boolean;
+  onFavouriteChange: (isFavourite: boolean) => void;
 };
 
-export default function ForecastOutput({ isFavourite }: Props) {
+export default function ForecastOutput({ isFavourite, onFavouriteChange }: Props) {
   const [selectedDay, setSelectedDay] = useState<HourlyDay>(hourlyDefaultHeading);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -69,9 +70,13 @@ export default function ForecastOutput({ isFavourite }: Props) {
     };
     const docId = `${user.uid}&${weatherData.latitude}:${weatherData.longitude}`;
 
+    onFavouriteChange(true);
     const ok = await addDocument(doc, docId);
     setIsSaving(false);
-    if (!ok) setSaveError('Could not save this place. Please try again.');
+    if (!ok) {
+      onFavouriteChange(false);
+      setSaveError('Could not save this place. Please try again.');
+    }
   };
 
   const handleRemove = async () => {
@@ -85,9 +90,13 @@ export default function ForecastOutput({ isFavourite }: Props) {
     setSaveError(null);
 
     const docId = `${user.uid}&${weatherData.latitude}:${weatherData.longitude}`;
+    onFavouriteChange(false);
     const ok = await deleteDocument(docId);
     setIsSaving(false);
-    if (!ok) setSaveError('Could not remove this place. Please try again.');
+    if (!ok) {
+      onFavouriteChange(true);
+      setSaveError('Could not remove this place. Please try again.');
+    }
   };
 
   if (weatherData === undefined)
@@ -125,14 +134,14 @@ export default function ForecastOutput({ isFavourite }: Props) {
     );
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-5">
+    <div className="flex flex-col gap-3 sm:gap-5">
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
           <p className="hidden items-center gap-2 text-sm font-medium text-sky-800/70 sm:flex">
             <FontAwesomeIcon icon={faLocationDot} className="text-sky-600" />
             Current forecast
           </p>
-          <h1 className="truncate text-lg font-bold tracking-tight text-slate-800 sm:mt-1 sm:text-3xl">
+          <h1 className="truncate text-xl font-bold tracking-tight text-slate-800 sm:mt-1 sm:text-3xl">
             {weatherData.address.join(', ')}
           </h1>
         </div>
@@ -142,26 +151,41 @@ export default function ForecastOutput({ isFavourite }: Props) {
             onClick={() => void handleAdd()}
             disabled={!isSignedIn || isSaving}
             title={
-              !isSignedIn ? 'Signing in…' : isSaving ? 'Saving…' : 'Save this place'
+              !isSignedIn
+                ? 'Signing in…'
+                : isSaving
+                  ? 'Saving this place…'
+                  : 'Save this place'
             }
             className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-r from-sky-500 to-teal-500 px-2.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-sky-900/10 transition hover:from-sky-600 hover:to-teal-600 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60 sm:gap-2 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm"
           >
-            <FontAwesomeIcon icon={faStar} />
-            <span className="hidden sm:inline">
-              {isSaving ? 'Saving…' : 'Save place'}
-            </span>
-            <span className="sm:hidden">{isSaving ? '…' : 'Save'}</span>
+            {isSaving ? (
+              <span
+                className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white"
+                aria-hidden
+              />
+            ) : (
+              <FontAwesomeIcon icon={faStar} />
+            )}
+            Save
           </button>
         ) : (
           <button
             type="button"
             onClick={() => void handleRemove()}
             disabled={!isSignedIn || isSaving}
-            title={isSaving ? 'Updating…' : 'Remove saved place'}
+            title={isSaving ? 'Removing this place…' : 'Remove saved place'}
             className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg border border-sky-300 bg-sky-50 px-2.5 py-1.5 text-xs font-semibold text-sky-800 shadow-sm transition hover:bg-sky-100 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60 sm:gap-2 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm"
           >
-            <FontAwesomeIcon icon={faStar} />
-            {isSaving ? '…' : 'Saved'}
+            {isSaving ? (
+              <span
+                className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-sky-300 border-t-sky-700"
+                aria-hidden
+              />
+            ) : (
+              <FontAwesomeIcon icon={faStar} />
+            )}
+            Saved
           </button>
         )}
       </div>
@@ -172,9 +196,9 @@ export default function ForecastOutput({ isFavourite }: Props) {
         </p>
       )}
 
-      <div className="flex min-w-0 flex-col gap-2 sm:gap-5">
+      <div className="flex min-w-0 flex-col gap-3 sm:gap-5">
         <Current />
-        <div className="min-w-0 rounded-2xl border border-sky-300/50 bg-gradient-to-br from-sky-100/90 via-cyan-50/85 to-teal-100/80 p-2.5 shadow-lg shadow-sky-900/10 backdrop-blur-md sm:rounded-3xl sm:p-6">
+        <div className="min-w-0 rounded-2xl border border-sky-300/50 bg-gradient-to-br from-sky-100/90 via-cyan-50/85 to-teal-100/80 p-3 shadow-lg shadow-sky-900/10 backdrop-blur-md sm:rounded-3xl sm:p-6">
           <Hourly dayToDisplay={selectedDay} />
         </div>
         <Daily setHourlyDay={setSelectedDay} selectedDay={selectedDay} />

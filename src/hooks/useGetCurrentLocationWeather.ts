@@ -5,10 +5,15 @@ import { useWeatherAPI } from './useWeatherAPI';
 
 export function useGetCurrentLocationWeather() {
   const { fetchWeather } = useWeatherAPI();
-  const { setWeatherData } = useCustomContext<WeatherContextType>('WeatherContext');
+  const {
+    beginWeatherRequest,
+    completeWeatherRequest,
+    isWeatherRequestCurrent,
+  } = useCustomContext<WeatherContextType>('WeatherContext');
   const [locationError, setLocationError] = useState<string | null>(null);
 
   const setWeatherFromCurrentLocation = useCallback((): Promise<void> => {
+    const requestId = beginWeatherRequest();
     setLocationError(null);
 
     if (!navigator.geolocation) {
@@ -25,8 +30,8 @@ export function useGetCurrentLocationWeather() {
             const weatherData = await fetchWeather({ latitude, longitude, timezone });
 
             if (weatherData != null) {
-              setWeatherData(weatherData);
-            } else {
+              completeWeatherRequest(requestId, weatherData);
+            } else if (isWeatherRequestCurrent(requestId)) {
               setLocationError(
                 'Located you, but the forecast could not be loaded. Please try again.'
               );
@@ -36,6 +41,11 @@ export function useGetCurrentLocationWeather() {
           }
         },
         (error) => {
+          if (!isWeatherRequestCurrent(requestId)) {
+            resolve();
+            return;
+          }
+
           console.error('Geolocation error', error.message);
           if (error.code === error.PERMISSION_DENIED) {
             setLocationError(
@@ -52,7 +62,12 @@ export function useGetCurrentLocationWeather() {
         }
       );
     });
-  }, [fetchWeather, setWeatherData]);
+  }, [
+    beginWeatherRequest,
+    completeWeatherRequest,
+    fetchWeather,
+    isWeatherRequestCurrent,
+  ]);
 
   const clearLocationError = useCallback(() => setLocationError(null), []);
 

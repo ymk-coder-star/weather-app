@@ -74,7 +74,7 @@ export default function App() {
   }, [isSavedOpen]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-300 via-cyan-200 to-teal-300 font-sans text-slate-800 antialiased">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-sky-300 via-cyan-200 to-teal-300 font-sans text-slate-800 antialiased">
       <WeatherContextProvider>
         <UnitsContextProvider>
           <header className="sticky top-0 z-40 border-b border-white/20 bg-slate-900/90 text-white shadow-lg backdrop-blur-xl">
@@ -120,9 +120,12 @@ export default function App() {
             </div>
           </header>
 
-          <main className="mx-auto w-full max-w-7xl px-3 py-2.5 sm:px-6 sm:py-5 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-6 lg:px-8 lg:py-7">
+          <main className="mx-auto w-full max-w-7xl flex-1 px-3 py-2.5 sm:px-6 sm:py-5 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-6 lg:px-8 lg:py-7">
             <section className="min-w-0">
-              <ForecastOutput isFavourite={isFavourite} />
+              <ForecastOutput
+                isFavourite={isFavourite}
+                onFavouriteChange={setIsFavourite}
+              />
             </section>
 
             {isLargeScreen && (
